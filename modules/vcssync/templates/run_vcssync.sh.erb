@@ -1,0 +1,23 @@
+#!/bin/bash -e
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+cd "$(dirname "${0}")"
+source ~/.passwords
+exec > build-repos-vcs-sync.log 2>&1
+
+function log() {
+    echo "$(date '+%Y-%m-%d %H:%M:%S') pid-$$ $*"
+}
+log "Acquiring lock"
+~/bin/lockfile -s60 -r5 build-repos-vcs-sync.lock
+trap "rm -f $PWD/build-repos-vcs-sync.lock" EXIT
+
+# Get mozharness updated / checked out and working
+log "Updating mozharness"
+(cd mozharness; timeout 20 git pull)
+log "Running vcs_sync.py"
+python mozharness/scripts/vcs-sync/vcs_sync.py -c mozharness/configs/vcs_sync/build-repos.py
+# Touch our timestamp file so nagios can check if we're fresh (not currently implemented)
+touch build-repos-vcs-sync.stamp
+log "Done"

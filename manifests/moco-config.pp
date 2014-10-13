@@ -197,6 +197,8 @@ class config inherits config::base {
 
     $buildmaster_ssh_keys = [ 'b2gbld_dsa', 'b2gtry_dsa', 'ffxbld_dsa', 'tbirdbld_dsa', 'trybld_dsa', 'xrbld_dsa' ]
 
+    $vcssync_mail_to = "release+vcs2vcs@mozilla.com"
+
     $collectd_write = {
         graphite_nodes => {
             'graphite-relay.private.scl3.mozilla.com' => {

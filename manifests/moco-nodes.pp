@@ -153,6 +153,12 @@ node "slaveapi-dev1.srv.releng.scl3.mozilla.com" {
     include toplevel::server::slaveapi
 }
 
+# vcs sync
+
+node github-sync\d+\.dmz\.scl3\.mozilla\.com {
+    include toplevel::server::vcssync
+}
+
 # mozpool servers
 
 node /mobile-imaging-stage1\.p127\.releng\.scl3\.mozilla\.com/ {
