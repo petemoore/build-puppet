@@ -1,0 +1,49 @@
+{
+  "accessToken": "<%= @taskcluster_access_token %>",
+  "cachesDir": "/var/generic-worker/caches",
+  "certificate": "",
+  "checkForNewDeploymentEverySecs": 0,
+  "cleanUpTaskDirs": true,
+  "clientId": "<%= @taskcluster_client_id %>",
+  "deploymentId": "",
+  "downloadsDir": "/var/generic-worker/downloads",
+  "idleTimeoutSecs": 0,
+  "instanceId": "",
+  "instanceType": "",
+  "livelogCertificate": "",
+  "livelogExecutable": "",
+  "livelogGETPort": 0,
+  "livelogKey": "",
+  "livelogPUTPort": 0,
+  "livelogSecret": "",
+  "numberOfTasksToRun": 0,
+  "privateIP": "",
+  "provisionerId": "scl3-puppet",
+  "publicIP": "",
+  "refreshURLsPrematurelySecs": 310,
+  "region": "",
+  "requiredDiskSpaceMegabytes": 10240,
+  "runAfterUserCreation": "",
+  "runTasksAsCurrentUser": true,
+  "shutdownMachineOnInternalError": false,
+  "shutdownMachineOnIdle": false,
+  "signingKeyLocation": "/etc/generic-worker/generic-worker.openpgp.key",
+  "subdomain": "taskcluster-worker.net",
+  "tasksDir": "/var/generic-worker/tasks",
+  "workerGroup": "scl3",
+  "workerId": "<%= @hostname %>",
+  "workerType": "os-x-<%= @macos_version %>-gw",
+  "workerTypeMetadata": {
+    "config": {
+      "deploymentId": "",
+      "runTaskAsCurrentUser": true
+    },
+    "generic-worker": {
+      "go-arch": "amd64",
+      "go-os": "darwin",
+      "go-version": "go1.7.3",
+      "release": "https://github.com/taskcluster/generic-worker/releases/tag/v8.0.1",
+      "version": "8.0.1"
+    }
+  }
+}

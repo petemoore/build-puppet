@@ -2,7 +2,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-class toplevel::worker::releng inherits toplevel::worker {
+class toplevel::generic_worker::releng inherits toplevel::worker {
     include instance_metadata
     include clean::appstate
 
