@@ -17,7 +17,7 @@ class packages::openssl {
                     realize(Packages::Yumrepo['openssl'])
                     package {
                         ["openssl", "openssl-devel"]:
-                            ensure => "1.0.1e-48.el6_8.3";
+                            ensure => "1.0.1e-48.el6_8.4";
                     }
                 }
                 default: {
@@ -35,18 +35,25 @@ class packages::openssl {
         }
 
         Ubuntu: {
-            realize(Packages::Aptrepo['openssl'])
             case $::operatingsystemrelease {
                 12.04: {
+                    realize(Packages::Aptrepo['openssl'])
                     package {
                         ["openssl", "libssl1.0.0", "libssl-dev"]:
                             ensure => '1.0.1-4ubuntu5.35';
                     }
                 }
                 14.04: {
+                    realize(Packages::Aptrepo['openssl'])
                     package {
                         ["openssl", "libssl1.0.0", "libssl-dev"]:
                             ensure => '1.0.1f-1ubuntu2.18';
+                    }
+                }
+                16.04: {
+                    package {
+                        ["openssl", "libssl1.0.0", "libssl-dev"]:
+                            ensure => '1.0.2g-1ubuntu4.6';
                     }
                 }
                 default: {

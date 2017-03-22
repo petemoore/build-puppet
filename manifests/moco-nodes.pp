@@ -3,6 +3,14 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 ## testers
+node "jwatkins-1330169.srv.releng.scl3.mozilla.com" {
+    # host to test the upgrade to Ubuntu 16.04
+    $aspects = [ 'low-security' ]
+    $slave_trustlevel = 'try'
+    $pin_puppet_server = "releng-puppet2.srv.releng.scl3.mozilla.com"
+    $pin_puppet_env = "dcrisan"
+    include toplevel::slave::releng::test::gpu
+}
 
 # linux64 and OS X
 
@@ -325,7 +333,9 @@ node "buildbot-master01.bb.releng.use1.mozilla.com" {
             master_type => "tests",
             basedir => "tests1-linux32";
     }
+    $l10n_bumper_env = "mozilla-beta"
     include toplevel::server::buildmaster::mozilla
+    include toplevel::mixin::l10n_bumper
 }
 
 node "buildbot-master02.bb.releng.use1.mozilla.com" {
@@ -427,7 +437,6 @@ node "buildbot-master69.bb.releng.use1.mozilla.com" {
 node "buildbot-master70.bb.releng.use1.mozilla.com" {
     $aspects = [ 'high-security' ]
     $only_user_ssh = true
-    $buildbot_bridge_env = "prod"
     buildmaster::buildbot_master::mozilla {
         "bm70-build1":
             http_port => 8001,
@@ -436,7 +445,6 @@ node "buildbot-master70.bb.releng.use1.mozilla.com" {
     }
     include toplevel::server::buildmaster::mozilla
     include toplevel::mixin::selfserve_agent
-    include toplevel::mixin::buildbot_bridge
 }
 
 node "buildbot-master71.bb.releng.use1.mozilla.com" {
@@ -527,7 +535,7 @@ node "buildbot-master77.bb.releng.use1.mozilla.com" {
             master_type => "build",
             basedir => "build1";
     }
-    $l10n_bumper_env = "jamun"
+    $l10n_bumper_env = "mozilla-central"
     include toplevel::server::buildmaster::mozilla
     include toplevel::mixin::l10n_bumper
 }
@@ -634,13 +642,17 @@ node "buildbot-master85.bb.releng.scl3.mozilla.com" {
 node "buildbot-master86.bb.releng.scl3.mozilla.com" {
     $aspects = [ 'high-security' ]
     $only_user_ssh = true
+    $buildbot_bridge_env = "prod"
     buildmaster::buildbot_master::mozilla {
         "bm86-build1":
             http_port => 8001,
             master_type => "build",
             basedir => "build1";
     }
+    $l10n_bumper_env = "mozilla-aurora"
     include toplevel::server::buildmaster::mozilla
+    include toplevel::mixin::l10n_bumper
+    include toplevel::mixin::buildbot_bridge
 }
 
 node "buildbot-master87.bb.releng.scl3.mozilla.com" {
@@ -1019,12 +1031,6 @@ node /pushapkworker-.*\.srv\.releng\..*\.mozilla\.com/ {
 }
 
 ## Loaners
-
-
-node "jwatkins-1330169.srv.releng.scl3.mozilla.com" {
-    $aspects = [ 'low-security' ]
-    include toplevel::server
-}
 
 node "dhouse-1330169.srv.releng.scl3.mozilla.com" {
     $aspects = [ 'low-security' ]

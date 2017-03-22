@@ -51,6 +51,15 @@ class packages::setup {
 
             # repos that are only installed where required
             @packages::yumrepo {
+                "nodesource":
+                    url_path => "repos/yum/mirrors/nodesource/el/$majorver/$architecture";
+
+                "devtools-2":
+                    url_path => "repos/yum/mirrors/devtools-2/$majorver/$architecture/RPMS";
+
+                "taskcluster":
+                    url_path => "repos/yum/custom/taskcluster/$architecture";
+
                 "passenger":
                     url_path => "repos/yum/mirrors/passenger/rhel/$majorver/latest/$architecture";
 
@@ -147,11 +156,17 @@ class packages::setup {
 
                 "jdk17":
                     url_path => "repos/yum/custom/jdk17/$architecture";
+
+                "subversion":
+                    url_path => "repos/yum/custom/subversion/$architecture";
+
+                "httpd":
+                    url_path => "repos/yum/custom/httpd/$architecture";
             }
 
             # to flush the metadata cache, increase this value by one (or
             # anything, really, just change it).
-            $repoflag = 75
+            $repoflag = 80
             file {
                 "/etc/.repo-flag":
                     content =>
@@ -186,7 +201,7 @@ class packages::setup {
             }
             # to flush the package index, increase this value by one (or
             # anything, really, just change it).
-            $repoflag = 38
+            $repoflag = 39
             file {
                 "/etc/.repo-flag":
                     content =>
@@ -212,28 +227,48 @@ class packages::setup {
                 "/etc/apt/apt.conf.d/99mozilla":
                     source => "puppet:///modules/packages/apt.conf.mozilla";
             }
-            packages::aptrepo {
-                "${lsbdistcodename}":
-                    url_path     => "repos/apt/ubuntu",
-                    distribution => "${lsbdistcodename}",
-                    components   => ["main", "restricted", "universe"];
-                "${lsbdistcodename}-security":
-                    url_path     => "repos/apt/ubuntu",
-                    distribution => "${lsbdistcodename}-security",
-                    components   => ["main", "restricted", "universe"];
-                "releng":
-                    url_path     => "repos/apt/releng",
-                    distribution => "${lsbdistcodename}",
-                    components   => ["main"];
-                "releng-updates":
-                    url_path     => "repos/apt/releng-updates",
-                    distribution => "${lsbdistcodename}-updates",
-                    components   => ["all"];
-                "puppetlabs":
-                    url_path     => "repos/apt/puppetlabs",
-                    distribution => "${lsbdistcodename}",
-                    components   => ["dependencies", "main"];
+            case $::operatingsystemrelease {
+                "16.04" : {
+                    packages::aptrepo {
+                        "xenial":
+                            url_path     => "repos/apt/Ubuntu-16.04",
+                            distribution => "xenial",
+                            components   => ["main", "restricted", "universe"];
+                        "xenial-security":
+                            url_path     => "repos/apt/Ubuntu-16.04",
+                            distribution => "xenial-security",
+                            components   => ["main", "restricted", "universe"];
+                    }
+                }
+                "14.04", "12.04" : {
+                    packages::aptrepo {
+                        "${lsbdistcodename}":
+                            url_path     => "repos/apt/ubuntu",
+                            distribution => "${lsbdistcodename}",
+                            components   => ["main", "restricted", "universe"];
+                        "${lsbdistcodename}-security":
+                            url_path     => "repos/apt/ubuntu",
+                            distribution => "${lsbdistcodename}-security",
+                            components   => ["main", "restricted", "universe"];
+                        "releng":
+                            url_path     => "repos/apt/releng",
+                            distribution => "${lsbdistcodename}",
+                            components   => ["main"];
+                        "releng-updates":
+                            url_path     => "repos/apt/releng-updates",
+                            distribution => "${lsbdistcodename}-updates",
+                            components   => ["all"];
+                        "puppetlabs":
+                            url_path     => "repos/apt/puppetlabs",
+                            distribution => "${lsbdistcodename}",
+                            components   => ["dependencies", "main"];
+                    }
+                }
+                default: {
+                    fail("Ubuntu $operatingsystemrelease is not supported")
+                }
             }
+
             @packages::aptrepo {
                 "graphics-drivers":
                     url_path     => "repos/apt/graphics-drivers",
@@ -277,6 +312,10 @@ class packages::setup {
                     components   => ["all"];
                 "git":
                     url_path     => "repos/apt/custom/git",
+                    distribution => "${lsbdistcodename}",
+                    components   => ["all"];
+                "libxcb":
+                    url_path     => "repos/apt/custom/libxcb",
                     distribution => "${lsbdistcodename}",
                     components   => ["all"];
             }

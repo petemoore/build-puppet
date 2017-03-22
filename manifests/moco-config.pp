@@ -351,7 +351,8 @@ class config inherits config::base {
     $obsolete_kernels = $operatingsystem ? {
         'CentOS' => $operatingsystemrelease ? {
             '6.2'   => [ '2.6.32-431.el6', '2.6.32-431.11.2.el6', '2.6.32-431.5.1.el6' ],
-            '6.5'   => [ '2.6.32-431.el6', '2.6.32-431.11.2.el6', '2.6.32-431.5.1.el6' ],
+            '6.5'   => [ '2.6.32-431.el6', '2.6.32-431.11.2.el6', '2.6.32-431.5.1.el6',
+                         '2.6.32-504.3.3.el6' ],
             default => [],
         },
         'Ubuntu' => $operatingsystemrelease ? {
@@ -381,7 +382,7 @@ class config inherits config::base {
 
     $buildbot_bridge_env_config = {
         "dev" => {
-            version => "1.5.25",
+            version => "1.6.1",
             client_id => secret("buildbot_bridge_dev_taskcluster_client_id"),
             access_token => secret("buildbot_bridge_dev_taskcluster_access_token"),
             dburi => secret("buildbot_bridge_dev_dburi"),
@@ -396,7 +397,7 @@ class config inherits config::base {
             ],
         },
         "prod" => {
-            version => "1.5.25",
+            version => "1.6.1",
             client_id => secret("buildbot_bridge_prod_taskcluster_client_id"),
             access_token => secret("buildbot_bridge_prod_taskcluster_access_token"),
             dburi => secret("buildbot_bridge_prod_dburi"),
@@ -439,6 +440,21 @@ class config inherits config::base {
             mozharness_repo => "https://hg.mozilla.org/projects/jamun",
             mozharness_revision => "567633537959",
             config_file => "l10n_bumper/jamun.py",
+        },
+        "mozilla-central" => {
+            mozharness_repo => "https://hg.mozilla.org/mozilla-central",
+            mozharness_revision => "d0462b0948e0",
+            config_file => "l10n_bumper/mozilla-central.py",
+        },
+        "mozilla-aurora" => {
+            mozharness_repo => "https://hg.mozilla.org/mozilla-central",
+            mozharness_revision => "d0462b0948e0",
+            config_file => "l10n_bumper/mozilla-aurora.py",
+        },
+        "mozilla-beta" => {
+            mozharness_repo => "https://hg.mozilla.org/mozilla-central",
+            mozharness_revision => "d0462b0948e0",
+            config_file => "l10n_bumper/mozilla-beta.py",
         },
     }
 }
