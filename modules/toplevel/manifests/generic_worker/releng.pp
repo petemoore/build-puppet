@@ -17,7 +17,7 @@ class toplevel::generic_worker::releng inherits toplevel::worker {
     include packages::mozilla::py27_virtualenv
     include buildslave::install
 
-    include taskcluster_worker
+    include generic_worker
 
     case $::kernel {
         'Linux': {
