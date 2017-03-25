@@ -32,6 +32,8 @@ node /t-yosemite-r7-004[0-8]\.test\.releng\.scl3\.mozilla\.com/ {
 node /t-yosemite-r7-0049\.test\.releng\.scl3\.mozilla\.com/ {
     $aspects = [ 'low-security' ]
     $slave_trustlevel = 'try'
+    $pin_puppet_server = "releng-puppet2.srv.releng.scl3.mozilla.com"
+    $pin_puppet_env = "pmoore"
     include toplevel::generic_worker::releng::test::gpu
 
     # Bug 1338557 - Please add pmoore public key to authorized_keys file of cltbld/root user of t-yosemite-r7-{0040..0049}
