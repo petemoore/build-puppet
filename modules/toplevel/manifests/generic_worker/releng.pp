@@ -35,8 +35,8 @@ class toplevel::generic_worker::releng inherits toplevel::worker {
             ensure => absent,
     }
 
-	# ensure taskcluster-worker is disabled, in case this machine previously
-	# ran it (temporary)
+    # ensure taskcluster-worker is disabled, in case this machine previously
+    # ran it
     file {
         "/Library/LaunchAgents/net.taskcluster.worker.plist":
             ensure => absent,
