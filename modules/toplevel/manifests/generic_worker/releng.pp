@@ -34,4 +34,11 @@ class toplevel::generic_worker::releng inherits toplevel::worker {
         "/Library/LaunchAgents/com.mozilla.runner.plist":
             ensure => absent,
     }
+
+	# ensure taskcluster-worker is disabled, in case this machine previously
+	# ran it (temporary)
+    file {
+        "/Library/LaunchAgents/net.taskcluster.worker.plist":
+            ensure => absent,
+    }
 }
