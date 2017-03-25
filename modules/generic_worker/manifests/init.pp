@@ -7,7 +7,7 @@ class generic_worker {
             $taskcluster_client_id = secret('generic_worker_client_id')
             $taskcluster_access_token = hiera('generic_worker_access_token')
 
-            file { '/Library/LaunchAgents/net.taskcluster.worker.plist':
+            file { '/Library/LaunchAgents/net.generic.worker.plist':
                 ensure => present,
                 content => template('generic_worker/generic-worker.plist.erb'),
                 mode => 0644,
