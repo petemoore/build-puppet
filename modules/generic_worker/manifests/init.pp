@@ -14,7 +14,7 @@ class generic_worker {
                 owner => root,
                 group => wheel,
             }
-            file { '/etc/generic-worker/generic-worker.config':
+            file { '/etc/generic-worker.config':
                 ensure => present,
                 content => template('generic_worker/generic-worker.config.erb'),
                 mode => 0644,
