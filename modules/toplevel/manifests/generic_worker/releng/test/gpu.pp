@@ -2,7 +2,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-class toplevel::worker::releng::test::gpu inherits toplevel::worker::releng::test {
+class toplevel::generic_worker::releng::test::gpu inherits toplevel::generic_worker::releng::test {
     class {
         gui:
             on_gpu => true,

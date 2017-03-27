@@ -14,10 +14,27 @@ node "jwatkins-1330169.srv.releng.scl3.mozilla.com" {
 
 # linux64 and OS X
 
-node /t-yosemite-r7-004[0-9]\.test\.releng\.scl3\.mozilla\.com/ {
+node /t-yosemite-r7-004[0-8]\.test\.releng\.scl3\.mozilla\.com/ {
     $aspects = [ 'low-security' ]
     $slave_trustlevel = 'try'
-    include toplevel::worker::releng::test::gpu
+    include toplevel::taskcluster_worker::releng::test::gpu
+
+    # Bug 1338557 - Please add pmoore public key to authorized_keys file of cltbld/root user of t-yosemite-r7-{0040..0049}
+    #realize(Users::Person["pmoore"])
+    users::root::extra_authorized_key {
+        'pmoore': ;
+    }
+    users::builder::extra_authorized_key {
+        'pmoore': ;
+    }
+}
+
+node /t-yosemite-r7-0049\.test\.releng\.scl3\.mozilla\.com/ {
+    $aspects = [ 'low-security' ]
+    $slave_trustlevel = 'try'
+    $pin_puppet_server = "releng-puppet2.srv.releng.scl3.mozilla.com"
+    $pin_puppet_env = "pmoore"
+    include toplevel::generic_worker::releng::test::gpu
 
     # Bug 1338557 - Please add pmoore public key to authorized_keys file of cltbld/root user of t-yosemite-r7-{0040..0049}
     #realize(Users::Person["pmoore"])
