@@ -8,7 +8,7 @@
 
 # First run the generic-worker, passing through any arguments handed to this
 # wrapper script...
-/usr/bin/local/generic-worker "$@"
+/usr/local/bin/generic-worker "$@"
 
 # Now reboot the machine immediately (time costs money)
 /usr/bin/sudo /sbin/shutdown -r now
