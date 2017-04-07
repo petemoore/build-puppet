@@ -11,7 +11,7 @@
 /usr/local/bin/generic-worker "$@"
 
 # Now reboot the machine immediately (time costs money)
-/usr/bin/sudo /sbin/shutdown -r now
+/usr/bin/sudo /sbin/reboot
 # Sleep to prevent this script from terminating naturally, and launchd restarting
 # it. Instead, the shutdown should cause this script to terminate (so it won't
 # really sleep for 2 mins). If shutdown doesn't kick in within 2 mins, it is sane
